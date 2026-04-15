@@ -127,7 +127,7 @@ class Options:
       self.inputFile = value
 
    def getInputFolder(self):
-      return self.outputFile
+      return self.inputFolder
 
    def setInputFolder(self, value):
       self.inputFolder = value
