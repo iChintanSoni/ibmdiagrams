@@ -249,53 +249,53 @@ class Compose:
       if fontname == None:
          fontname = ""
       else:
-         fontname = ", font='" + fontname + "'"
+         fontname = ", font=" + repr(fontname)
 
       index = name.find("Group")
       if index != -1:
-         name = name[0:index-1] 
+         name = name[0:index-1]
 
          if self.common.isCustomLabels() or useCustomLabel:
             label = data["label"]
             if "sublabel" in data:
-               sublabel = ", '" + data["sublabel"] + "'"
+               sublabel = ", " + repr(str(data["sublabel"]))
             else:
                sublabel = ""
          else:
             label = name
             sublabel = ""
 
-         name = name.replace(" ", "") 
+         name = name.replace(" ", "")
 
          if output == None:
             output = ""
          else:
-            output = ", output='" + output + "'"
+            output = ", output=" + repr(output)
 
          if direction == 'LR':
             direction = ""
          else:
-            direction = ", direction='" + direction + "'"
+            direction = ", direction=" + repr(direction)
 
-         print(" " * self.indent + "with " + name + "('" + label + "'" + sublabel + output + direction + fontname + "):", file=pythonfile)
+         print(" " * self.indent + "with " + name + "(" + repr(str(label)) + sublabel + output + direction + fontname + "):", file=pythonfile)
 
       index = name.find("Icon")
       if index != -1:
-         name = name[0:index-1] 
+         name = name[0:index-1]
 
          if self.common.isCustomLabels() or useCustomLabel:
             label = data["label"]
             if "sublabel" in data:
-               sublabel = ", '" + data["sublabel"] + "'"
+               sublabel = ", " + repr(str(data["sublabel"]))
             else:
                sublabel = ""
          else:
             label = name
             sublabel = ""
 
-         name = name.replace(" ", "") 
+         name = name.replace(" ", "")
 
-         print(" " * self.indent + name + "('" + label + "'" + sublabel + fontname + ")", file=pythonfile)
+         print(" " * self.indent + name + "(" + repr(str(label)) + sublabel + fontname + ")", file=pythonfile)
 
       for child in parent.children:
          self.composeResources(child, False, pythonfile)
