@@ -551,9 +551,9 @@ class Build:
             if parentid == None:
               icon = ITEM_ICON_DEFAULT
             else:
-              parentproperties = groups[parentid]
+              parentproperties = self.groups[parentid]
               icon = parentproperties["icon"]
-              groups[groupid]["hideicon"] = True
+              self.groups[parentid]["hideicon"] = True
               hideicon = True
          elif not self.icons.validIcon(icon):
             self.common.printInvalidIcon(icon)
