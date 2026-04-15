@@ -3,64 +3,54 @@ name = "ibmdiagrams"
 version = "3.1.10"
 description = "Generate architecture diagrams following IBM Diagram Standard"
 readme = "README.md"
-requires-python = ">=3.11.0"
+requires-python = ">=3.11"
 license = {file = "LICENSE"}
 keywords = ["cloud", "diagrams", "ibm"]
 authors = [
-  {name = "Jay Warfield", email = "jay.warfield@us.ibm.com" }
+  {name = "Jay Warfield", email = "jay.warfield@us.ibm.com"},
 ]
 maintainers = [
-  {name = "Jay Warfield", email = "jay.warfield@us.ibm.com" }
+  {name = "Jay Warfield", email = "jay.warfield@us.ibm.com"},
 ]
-# For a list of valid classifiers, see https://pypi.org/classifiers/
-classifiers = [ 
-  "Development Status :: 3 - Alpha", 
-  "Intended Audience :: Software Architects :: Cloud Architects || Developers",
-  "Topic :: Diagrams :: Cloud :: Development",
-  "License :: OSI Approved :: Apache License 2.0",
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3 :: Only",
 ]
-# For an analysis of this field vs pip's requirements files see:
-# https://packaging.python.org/discussions/install-requires-vs-requirements/
 dependencies = [
-  'pandas>=1.4.2',
-  'PyYAML>=6.0',
-  'requests>=2.31.0',
-  'tabulate>=0.9.0',
-  'urllib3>=1.26.9'
+  "pandas>=1.4.2",
+  "PyYAML>=6.0",
+  "requests>=2.31.0",
+  "tabulate>=0.9.0",
+  "urllib3>=1.26.9",
 ]
-##[project.optional-dependencies]
-##dev = ["check-manifest"]
-##test = ["coverage"]
 
-# Examples listed include a pattern for specifying where the package tracks
-# issues, where the source is hosted, where to say thanks to the package
-# maintainers, and where to support the project financially. The key is
-# what's used to render the link text on PyPI.
-##[project.urls]  # Optional
-##"Homepage" = "https://github.com/pypa/sampleproject"
-##"Bug Reports" = "https://github.com/pypa/sampleproject/issues"
-##"Funding" = "https://donate.pypi.org"
-##"Say Thanks!" = "http://saythanks.io/to/example"
-##"Source" = "https://github.com/pypa/sampleproject/"
-
-# The following would provide a command line executable called `sample`
-# which executes the function `main` from this package when invoked.
-##[project.scripts]  # Optional
-# sample = "sample:main"
-
-# This is configuration specific to the `setuptools` build backend.
-# If you are using a different build backend, you will need to change this.
-[tool.setuptools]
-# If there are data files included in your packages that need to be
-# installed, specify them here.
-##package-data = {"sample" = ["*.dat"]}
-
-[build-system]
-# These are the assumed default build requirements from pip:
-# https://pip.pypa.io/en/stable/reference/pip/#pep-517-and-518-support
-requires = ["setuptools>=43.0.0", "wheel"]
-build-backend = "setuptools.build_meta"
+[project.urls]
+Homepage = "https://github.com/IBM/ibmdiagrams"
+"Bug Reports" = "https://github.com/IBM/ibmdiagrams/issues"
+Source = "https://github.com/IBM/ibmdiagrams"
 
 [project.scripts]
 ibmdiagrams = "ibmdiagrams.ibmscripts.ibmdiagrams:main"
+
+[dependency-groups]
+dev = [
+  "pytest>=7.0",
+  "pytest-cov>=4.0",
+  "build>=1.0",
+  "twine>=4.0",
+]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
