@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 from os import path, makedirs
 from xml.etree import ElementTree as ET
 
@@ -64,7 +65,15 @@ class Elements:
 
    def dumpXML(self, file, folder):
       if folder != "":
-         pathname = path.join(folder, file.replace(" ", ""))
+         # Use only the basename so a file argument like '../../etc/evil'
+         # cannot escape the intended output folder.
+         safe_filename = os.path.basename(file.replace(" ", ""))
+         pathname = os.path.realpath(path.join(folder, safe_filename))
+         base_folder = os.path.realpath(folder)
+
+         if not pathname.startswith(base_folder + os.sep) and pathname != base_folder:
+            raise ValueError(f"Output path '{pathname}' is outside the output folder '{base_folder}'")
+
          filepath, filename = path.split(pathname)
 
          if not path.exists(filepath):
