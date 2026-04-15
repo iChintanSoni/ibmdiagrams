@@ -17,9 +17,6 @@ venv/
 env/
 .env/
 
-# uv
-uv.lock
-
 # Testing
 .pytest_cache/
 .tox/
