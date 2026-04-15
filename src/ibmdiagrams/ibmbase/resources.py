@@ -700,16 +700,28 @@ class Resources:
 
          self.resourceDictionary['ibm_is_subnet'] = frame
 
+      # Build a vpc-id -> region lookup from subnets so each VPC gets its own
+      # region rather than the last iteration variable from the subnets loop.
+      vpc_region_map = {}
+      if 'subnets' in data:
+         for s in data['subnets']:
+            vid = s.get('vpcId', '')
+            reg = s.get('region', '')
+            if vid and reg:
+               vpc_region_map[vid] = reg
+
       # Map vpcs to name, id, crn
       if 'vpcs' in data:
          count = 0
          table = {}
          vpcs = data['vpcs']
 
-         for vpc in vpcs: 
+         for vpc in vpcs:
             name = vpc['name']
             id = vpc['id']
-            region = subnet['region']
+            # Prefer region declared directly on the VPC; fall back to the
+            # region derived from the VPC's subnets.
+            region = vpc.get('region') or vpc_region_map.get(id, '')
             attributes = {'name': name, 'id': id, 'crn': 'crn:v1:bluemix:public:vpc:' + region}
             row = {"id": id} | attributes
             table[count] = row
