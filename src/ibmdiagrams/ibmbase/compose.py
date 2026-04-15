@@ -68,17 +68,16 @@ class Compose:
       if self.outputfolder != '' and not path.exists(self.outputfolder):
          makedirs(self.outputfolder)
       filelocation = path.join(self.outputfolder, self.outputfile)
-      pythonfile = open(filelocation, "w")
-      self.composeIncludes(pythonfile)
-      self.composeResources(self.top, True, pythonfile)
-      pythonfile.close()
+      with open(filelocation, "w") as pythonfile:
+         self.composeIncludes(pythonfile)
+         self.composeResources(self.top, True, pythonfile)
       if self.common.isDrawioCode():
-         #exec(open(filelocation).read())
          result = subprocess.run([sys.executable, filelocation], capture_output=True, text=True)
-         #print(result.stdout)
-         #print(result.stderr)
          remove(filelocation)
-      return
+         if result.returncode != 0:
+            print(result.stderr, file=sys.stderr)
+            return False
+      return True
 
    def composeTree(self):
       diagramdata = {"label": [self.diagramname]}
