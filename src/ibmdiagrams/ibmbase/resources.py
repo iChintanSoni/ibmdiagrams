@@ -527,9 +527,17 @@ class Resources:
    def loadResources(self):
       if not os.path.isfile(self.common.getInputFile()):
          return False
-      
-      stream = open(self.common.getInputFile(), 'r', encoding='utf-8-sig')
-      data = json_load(stream.read())
+
+      try:
+         with open(self.common.getInputFile(), 'r', encoding='utf-8-sig') as stream:
+            data = json_load(stream.read())
+      except OSError:
+         self.common.printInvalidFile(self.common.getInputFile())
+         return False
+      except ValueError:
+         # json.JSONDecodeError is a subclass of ValueError
+         self.common.printInvalidFile(self.common.getInputFile())
+         return False
       resourcedata = data['resources']
       df = pd.json_normalize(resourcedata)
 
@@ -641,13 +649,21 @@ class Resources:
    def loadJSON(self):
       if not os.path.isfile(self.common.getInputFile()):
          return False
-      
+
       instances = pd.DataFrame()
       subnets = pd.DataFrame()
       vpcs = pd.DataFrame()
 
-      stream = open(self.common.getInputFile(), 'r', encoding='utf-8-sig')
-      data = json_load(stream.read())
+      try:
+         with open(self.common.getInputFile(), 'r', encoding='utf-8-sig') as stream:
+            data = json_load(stream.read())
+      except OSError:
+         self.common.printInvalidFile(self.common.getInputFile())
+         return False
+      except ValueError:
+         # json.JSONDecodeError is a subclass of ValueError
+         self.common.printInvalidFile(self.common.getInputFile())
+         return False
 
       # Map instances to name, primary_network_interface primary_ip address, id, primary_network_interface subnet, vpc+zone, vpc  
       if 'instances' in data:

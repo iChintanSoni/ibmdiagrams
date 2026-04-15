@@ -64,8 +64,18 @@ class OpsJson:
       return
 
    def loadJSON(self):
-      stream = open(self.common.getInputFile(), 'r', encoding='utf-8-sig')
-      self.data = json_load(stream.read())
+      inputfile = self.common.getInputFile()
+      try:
+         with open(inputfile, 'r', encoding='utf-8-sig') as stream:
+            self.data = json_load(stream.read())
+      except OSError as e:
+         self.common.printInvalidFile(inputfile)
+         exit()
+      except ValueError as e:
+         # json.JSONDecodeError is a subclass of ValueError
+         self.common.printInvalidFile(inputfile)
+         exit()
+
       if not 'vpcs' in self.data:
          #self.common.printMissingVPCs(self.common.getInputFile())
          self.common.printMissingVPCs()
@@ -81,8 +91,18 @@ class OpsJson:
       return
 
    def loadYAML(self):
-      stream = open(self.common.getInputFile(), 'r')
-      self.data = yaml_load(stream, Loader=yaml_FullLoader)
+      inputfile = self.common.getInputFile()
+      try:
+         with open(inputfile, 'r') as stream:
+            self.data = yaml_load(stream, Loader=yaml_FullLoader)
+      except OSError as e:
+         self.common.printInvalidFile(inputfile)
+         exit()
+      except Exception as e:
+         # yaml.YAMLError and other parse errors
+         self.common.printInvalidFile(inputfile)
+         exit()
+
       if not 'vpcs' in self.data:
          #self.common.printMissingVPCs(self.common.getInputFile())
          self.common.printMissingVPCs()
