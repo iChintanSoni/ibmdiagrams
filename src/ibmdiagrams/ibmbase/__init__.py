@@ -13,10 +13,44 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .properties import Properties
-from .build import Build
-from .common import Common
-from .compose import Compose
-from .load import Load
-#from .composejson import ComposeJSON
-#from .loadjson import LoadJSON
+# Import from new locations and re-export for backward compatibility
+from .builders.build import Build
+from .builders.shapes import Shapes
+from .builders.types import Types
+from .core.common import Common
+from .core.options import Options
+from .core.properties import Properties
+from .core.messages import Messages
+from .composers.compose import Compose
+from .composers.composejson import ComposeJSON
+from .loaders.load import Load
+from .loaders.loadjson import LoadJSON
+from .loaders.opsjson import OpsJson
+from .loaders.icons import Icons
+from .elements.elements import Elements
+from .resources import Resources
+from .utils.utils import randomid
+from .utils import enums, constants
+from .utils.colors import Colors
+
+__all__ = [
+    "Build",
+    "Shapes",
+    "Types",
+    "Common",
+    "Options",
+    "Properties",
+    "Messages",
+    "Compose",
+    "ComposeJSON",
+    "Load",
+    "LoadJSON",
+    "OpsJson",
+    "Icons",
+    "Elements",
+    "Resources",
+    "randomid",
+    "enums",
+    "constants",
+    "Colors",
+]

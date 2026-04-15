@@ -1,4 +1,4 @@
-# @file build.py
+# @file utils.py
 #
 # Copyright contributors to the ibmdiagrams project
 #
@@ -14,8 +14,8 @@
 # limitations under the License.
 
 # Compatibility shim - redirects to new location
-from .builders.build import Build
+from .utils.utils import randomid
 
-__all__ = ["Build"]
+__all__ = ["randomid"]
 
 # Made with Bob
